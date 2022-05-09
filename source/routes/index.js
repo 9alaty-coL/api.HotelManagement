@@ -1,7 +1,12 @@
 const authRoute = require('./auth')
+const roomRoute = require('./room')
 
 const route = app => {
-    app.get('/auth', (req, res, next) => res.send("hello"))
+    app.get('/', (res, req)=>{
+        res.send("Welcome to hotelmanagement api")
+    })
+    app.use('/auth', authRoute)
+    app.use('/room', roomRoute)
 }
 
 module.exports = route

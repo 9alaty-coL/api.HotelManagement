@@ -4,6 +4,14 @@ const express = require("express")
 const app = express()
 const port = process.env.PORT || 8000;
 
+// Read body post
+app.use(
+  express.urlencoded({
+      extended: true,
+  }),
+);
+app.use(express.json());
+
 //router
 const route = require("./routes/index");
 route(app);
