@@ -12,8 +12,8 @@ const port = process.env.PORT || 8000;
 // });
 
 //  Enable CORS on Server
-// let cors = require("cors");
-// app.use(cors());
+let cors = require("cors");
+app.use(cors());
 
 // Read body post
 app.use(
