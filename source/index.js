@@ -12,6 +12,10 @@ app.use(
 );
 app.use(express.json());
 
+//  Enable CORS on Server
+let cors = require("cors");
+app.use(cors());
+
 //router
 const route = require("./routes/index");
 route(app);
