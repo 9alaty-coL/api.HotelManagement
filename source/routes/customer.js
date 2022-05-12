@@ -1,8 +1,8 @@
 const express = require('express')
 const router = express.Router()
-const RoomController = require('../controllers/RoomController')
+const CustomerController = require('../controllers/CustomerController')
 const isAuth = require('../middlewares/isAuth')
 
-router.get('/', isAuth, RoomController.getAllRoom)
+router.get('/', isAuth, CustomerController.getAllRoom)
 
 module.exports = router

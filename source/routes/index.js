@@ -7,6 +7,7 @@ const route = app => {
     })
     app.use('/auth', authRoute)
     app.use('/room', roomRoute)
+    app.use('/customer', customerRoute)
 }
 
 module.exports = route
