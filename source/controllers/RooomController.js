@@ -1,7 +1,7 @@
 class RoomController{
     async getAllRoom (req, res, next){
         return res.json({
-            allroom: "here"
+            allroom: "here!"
         })
     }
 }
