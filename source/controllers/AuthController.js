@@ -12,8 +12,10 @@ class AuthController{
                 data:{
                     username: user.username,
                     role: user.role,
-                }
-            }, process.env.TOKEN_SECRET)
+                },
+            }, process.env.TOKEN_SECRET, {
+                expiresIn: 60 * 60 * 24,
+            })
 
             res.status(200).json({
                 AUTH_TOKEN: token,
