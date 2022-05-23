@@ -10,6 +10,7 @@ class AuthController{
         if (user && await bcrypt.compare(password, user.password)){
             const token = jwt.sign({
                 data:{
+                    _id: user._id,
                     username: user.username,
                     role: user.role,
                 },
