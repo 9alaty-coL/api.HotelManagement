@@ -1,5 +1,6 @@
 const authRoute = require('./auth')
 const roomRoute = require('./room')
+const messRoute = require('./mess')
 
 const route = app => {
     app.get('/', (req, res)=>{
@@ -7,6 +8,7 @@ const route = app => {
     })
     app.use('/auth', authRoute)
     app.use('/room', roomRoute)
+    app.use('/mess', messRoute)
 }
 
 module.exports = route
