@@ -5,8 +5,8 @@ const UserM = require('../models/User')
 class MessageController{
     async getAll (req, res, next) {
         try {
-            const messages = await MessageM.find({senderId: req.user._id})
-            res.json(messages)  
+            const messages = await MessageM.find({senderId: req.user._id, recieverId: req.body.recieverId})
+            res.json(messages)
         } catch (error) {
             res.status(401).json({
                 message: "failed"
@@ -30,6 +30,17 @@ class MessageController{
         const users = await UserM.find({})
         const partners = users.filter(value => value._id.toString() !== req.user._id.toString())
         res.status(200).json(partners)
+    }
+
+    async getOneUser (req, res, next){
+        const userId = req.query.userId
+        const us = await UserM.findOne({_id: userId})
+        res.status(200).json({
+            _id: us._id,
+            name: us.name,
+            role: us.role,
+            avatar: us.avatar
+        })
     }
 
 }
