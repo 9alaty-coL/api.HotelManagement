@@ -18,8 +18,14 @@ class AuthController{
                 expiresIn: 60 * 60 * 24,
             })
 
+            const issuedDatetime = new Date()
+            const expiredDatetime = new Date(issuedDatetime);
+            expiredDatetime.setDate(issuedDatetime.getDate() + 1)
+
             res.status(200).json({
                 AUTH_TOKEN: token,
+                issued: issuedDatetime.toLocaleString(),
+                expired: expiredDatetime.toLocaleString(),
             })
         }
         else{
