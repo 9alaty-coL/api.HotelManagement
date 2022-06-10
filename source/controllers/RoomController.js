@@ -6,6 +6,16 @@ class RoomController{
         res.json(rooms)
     }
 
+    async getOneRoom (req, res, next){
+        const _name = req.body.name;
+        const room = await RoomM.findOne({name: _name})
+        
+        if (!room)
+            return res.status(404).json({message: "Not found"})
+        else
+            res.json(room)
+    }
+
     async add (req, res, next) {
         const _name = req.body.name;
         const _type = req.body.type;
