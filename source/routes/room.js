@@ -9,5 +9,6 @@ router.get('/getRoom', isAuth, RoomController.getOneRoom)
 router.post('/addRoom', isAdmin, RoomController.add)
 router.put('/updateRoom', isAdmin, RoomController.update)
 router.delete('/deleteRoom', isAdmin, RoomController.delete)
+router.post('/bookRoom', isAdmin, RoomController.bookRoom)
 
 module.exports = router

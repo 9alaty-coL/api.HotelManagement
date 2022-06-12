@@ -77,6 +77,22 @@ class RoomController{
 
         res.json({message: `${_name} is deleted successfully`})
     }
+
+    async bookRoom(req, res, next){
+        if (!req.body.roomId || !req.body.customerName){
+            return res.status(401).json({message: "Invalid room or customer name"})
+        }
+        try {
+            const result = await RoomM.updateOne({_id: req.body.roomId}, {
+                customer: req.body.customerName,
+                status:"phòng đã đặt",
+            })
+            return res.status(200).json(result)
+        } catch (error) {
+            return res.status(201).json({message: "Internal server error: " + error.message})
+        }
+
+    }
 }
 
 module.exports = new RoomController()
