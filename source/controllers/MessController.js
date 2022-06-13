@@ -5,8 +5,11 @@ const UserM = require('../models/User')
 class MessageController{
     async getAll (req, res, next) {
         try {
-            const messages = await MessageM.find({senderId: req.user._id, recieverId: req.body.recieverId})
-            res.json(messages)
+            const messages1 = await MessageM.find({senderId: req.user._id, recieverId: req.body.recieverId})
+            const messages2 = await MessageM.find({senderId: req.body.recieverId, recieverId: req.user._id})
+            const message = [...messages1, ...messages2]
+            message.sort((m1, m2) => Number(new Date(m1.createdAt)) - Number(new Date(m2.createdAt)))
+            res.json(message)
         } catch (error) {
             res.status(401).json({
                 message: "failed"
@@ -14,17 +17,28 @@ class MessageController{
         }
     }
     async sendMessage (req, res, next){
-        const message = req.body.message
-        if (message){
-            const newMessage = new MessageM(message)
-            await newMessage.save()
-            return res.status(200).json({
-                result: "successfully"
+        const message = {
+            senderId: req.user._id,
+            recieverId: req.body.recieverId,
+            message: req.body.message,
+        }
+        try {
+            if (message){
+                const newMessage = new MessageM(message)
+                const response  = await newMessage.save()
+                return res.status(200).json(response)
+            }
+            else{
+                return res.status(401).json({
+                    message: "invalid data"
+                })
+            }
+        } catch (error) {            
+            res.status(201).json({
+                message: "internal server error: " + error.message
             })
         }
-        res.json({
-            message: "failed"
-        })
+
     }
     async getAllPartner(req, res, next) {
         const users = await UserM.find({})
