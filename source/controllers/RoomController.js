@@ -16,6 +16,15 @@ class RoomController{
             res.json(room)
     }
 
+    async getBookedRoom (req, res, next) {
+        const bookedRoom = await RoomM.find({status: "phòng đã đặt"})
+
+        if (!bookedRoom)
+            return res.status(404).json({message: "Not found"})
+        else
+            res.json(bookedRoom)
+    }
+
     async add (req, res, next) {
         const _name = req.body.name;
         const _type = req.body.type;
