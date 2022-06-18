@@ -11,7 +11,7 @@ router.get('/getAvailableRoom', isAuth, RoomController.getAvailableRoom)
 router.post('/addRoom', isAdmin, RoomController.add)
 router.put('/updateRoom', isAdmin, RoomController.update)
 router.put('/changeCustomerInfo', isAuth, RoomController.changeCustomerInfo)
-router.put('/deleteCustomerInfo', isAuth, RoomController.deleteCustomerInfo)
+router.delete('/deleteCustomerInfo', isAuth, RoomController.deleteCustomerInfo)
 router.delete('/deleteRoom', isAdmin, RoomController.delete)
 router.post('/bookRoom', isAdmin, RoomController.bookRoom)
 

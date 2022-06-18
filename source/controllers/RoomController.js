@@ -103,17 +103,15 @@ class RoomController{
         try {
             const result = await RoomM.updateOne({_id: req.body.roomId}, {
                 customer: req.body.customerName,
-                status:"phòng đã đặt",
+                status:"Phòng đã đặt",
             })
             return res.status(200).json(result)
         } catch (error) {
             return res.status(201).json({message: "Internal server error: " + error.message})
         }
-
     }
 
     async changeCustomerInfo(req, res, next) {
-        console.log(req.body);
         const _name = req.body.name;
         const _oldName = req.body.oldName;
         const _customer = req.body.customer;
@@ -151,6 +149,7 @@ class RoomController{
     }
 
     async deleteCustomerInfo(req, res, next) {
+        console.log(req.body);
         const _name = req.body.name;
 
         const room = await RoomM.findOne({name: _name})
