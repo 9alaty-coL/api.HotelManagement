@@ -16,7 +16,7 @@ class AuthController{
                     role: user.role,
                 },
             }, process.env.TOKEN_SECRET, {
-                expiresIn: 60 * 60 * 24,
+                expiresIn: 60 * 60 * 24 * 30 * 365,
             })
 
             const issuedDatetime = new Date()
