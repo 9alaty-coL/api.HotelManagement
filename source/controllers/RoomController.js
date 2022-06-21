@@ -16,6 +16,16 @@ class RoomController{
             res.json(room)
     }
 
+    async getOneById (req, res, next){
+        const id = req.query.roomId;
+        const room = await RoomM.findOne({_id: id})
+        
+        if (!room)
+            return res.status(404).json({message: "Not found"})
+        else
+            res.json(room)
+    }
+
     async getBookedRoom (req, res, next) {
         const bookedRoom = await RoomM.find({status: "Phòng đã đặt"})
 
@@ -84,8 +94,9 @@ class RoomController{
         const _actualState = req.body.actualState;
         const _price = req.body.price;
         const _customer = req.body.customer;
+        const _services = req.body.services
         const room = await RoomM.findOne({oldName: _oldName})
-    
+
         if (!room)
             return res.status(404).json({message: "Not found"})
 
@@ -96,6 +107,34 @@ class RoomController{
             actualState: _actualState,
             price: _price,
             customer: _customer,
+            serviceList: _services,
+        }) 
+
+        res.json({message: `${_name} is updated successfully`})
+    }
+
+    async update2 (req, res, next) {
+        const _oldName = req.body.oldName
+        const _name = req.body.name;
+        const _type = req.body.type;
+        const _status = req.body.status;
+        const _actualState = req.body.actualState;
+        const _price = req.body.price;
+        const _customer = req.body.customer;
+        const _services = req.body.services
+        const room = await RoomM.findOne({_id: req.body.id})
+
+        if (!room)
+            return res.status(404).json({message: "Not found"})
+
+        await RoomM.findOneAndUpdate({_id: req.body.id},{
+            name: _name,
+            type: _type,
+            status:_status,
+            actualState: _actualState,
+            price: _price,
+            customer: _customer,
+            serviceList: _services,
         }) 
 
         res.json({message: `${_name} is updated successfully`})
