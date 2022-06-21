@@ -25,6 +25,24 @@ class RoomController{
             res.json(bookedRoom)
     }
 
+    async getBookedRoomByName (req, res, next) {
+        console.log(req.query)
+        const _name = req.query.name;
+
+        if (_name === "") 
+            return res.json({message: "Not found"})
+
+        const bookedRoom = await RoomM.find({status: "Phòng đã đặt"})
+
+        if (!bookedRoom)
+            res.status(404).json({message: "Not found"})
+        else {
+            res.json(bookedRoom.filter(room => room.customer.includes(_name)))
+            console.log(_name)
+            console.log(bookedRoom.filter(room => room.customer.includes(_name)))
+        }       
+    }
+
     async getAvailableRoom(req, res, next) {
         const availableRoom = await RoomM.find({status: "Phòng trống"})
 
@@ -104,6 +122,7 @@ class RoomController{
             const result = await RoomM.updateOne({_id: req.body.roomId}, {
                 customer: req.body.customerName,
                 status:"Phòng đã đặt",
+                time: req.body.time
             })
             return res.status(200).json(result)
         } catch (error) {
@@ -112,7 +131,6 @@ class RoomController{
     }
 
     async changeCustomerInfo(req, res, next) {
-        console.log(req.body);
         const _name = req.body.name;
         const _oldName = req.body.oldName;
         const _customer = req.body.customer;
@@ -150,6 +168,7 @@ class RoomController{
     }
 
     async deleteCustomerInfo(req, res, next) {
+        console.log(req.body);
         const _name = req.body.name;
 
         const room = await RoomM.findOne({name: _name})
