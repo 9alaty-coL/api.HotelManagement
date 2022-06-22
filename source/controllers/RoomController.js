@@ -113,39 +113,15 @@ class RoomController{
         const _price = req.body.price;
         const _customer = req.body.customer;
         const _services = req.body.services
-        const room = await RoomM.findOne({oldName: _oldName})
+        const room = await RoomM.findOne({name: _oldName})
+        const newRoom = await RoomM.findOne({name: _name})
 
+        if (newRoom && _name !== _oldName)
+            return res.status(406).json({message: "This room already exists"})
         if (!room)
             return res.status(404).json({message: "Not found"})
-
-        await RoomM.findOneAndUpdate({oldName: _oldName},{
-            name: _name,
-            type: _type,
-            status:_status,
-            actualState: _actualState,
-            price: _price,
-            customer: _customer,
-            serviceList: _services,
-        }) 
-
-        res.json({message: `${_name} is updated successfully`})
-    }
-
-    async update2 (req, res, next) {
-        const _oldName = req.body.oldName
-        const _name = req.body.name;
-        const _type = req.body.type;
-        const _status = req.body.status;
-        const _actualState = req.body.actualState;
-        const _price = req.body.price;
-        const _customer = req.body.customer;
-        const _services = req.body.services
-        const room = await RoomM.findOne({_id: req.body.id})
-
-        if (!room)
-            return res.status(404).json({message: "Not found"})
-
-        await RoomM.findOneAndUpdate({_id: req.body.id},{
+       
+        await RoomM.findOneAndUpdate({name: _oldName},{
             name: _name,
             type: _type,
             status:_status,

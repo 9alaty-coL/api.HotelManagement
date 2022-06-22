@@ -23,9 +23,13 @@ class RoomTypesController{
         const oldType = req.body.oldType; 
         const newType = req.body.newType; 
         const roomType = await RoomTypesM.findOne({type: oldType})
+        const newRoomType = await RoomTypesM.findOne({type: newType})
     
         if (!roomType)
             return res.status(404).json({message: "Not found"})
+
+        if (newRoomType && newType !== oldType)
+            return res.status(406).json({message: "This room type already exists"})
 
         await RoomTypesM.findOneAndUpdate({type: oldType}, {type: newType})
 
