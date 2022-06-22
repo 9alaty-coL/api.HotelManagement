@@ -3,6 +3,7 @@ const roomRoute = require('./room')
 const messRoute = require('./mess')
 const roomTypesRoute = require('./roomTypes')
 const serviceRoute = require('./service')
+const billRoute = require('./bill')
 
 const route = app => {
     app.get('/api', (req, res)=>{
@@ -13,6 +14,7 @@ const route = app => {
     app.use('/api/mess', messRoute)
     app.use('/api/roomTypes', roomTypesRoute)
     app.use('/api/service', serviceRoute)
+    app.use('/api/bill', billRoute)
 }
 
 module.exports = route

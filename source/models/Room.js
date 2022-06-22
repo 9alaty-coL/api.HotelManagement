@@ -8,7 +8,8 @@ const RoomSchema = new Schema({
     actualState: String,
     price: String,
     customer: String,
-    time: Date
+    time: Date,
+    serviceList: Array,
 })
 
 const Room = mongoose.model('room', RoomSchema)
