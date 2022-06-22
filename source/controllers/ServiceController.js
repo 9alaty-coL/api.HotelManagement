@@ -39,12 +39,15 @@ class ServiceController{
         const _name = req.body.name;
         const _desc = req.body.description;
         const _price = req.body.price;
-        const service = await ServiceM.findOne({oldName: _oldName})
-    
+        const service = await ServiceM.findOne({name: _oldName})
+        const newService = await ServiceM.findOne({name: _name})
         if (!service)
             return res.status(404).json({message: "Not found"})
 
-        await ServiceM.findOneAndUpdate({oldName: _oldName},{
+        if (newService && _name !== _oldName)
+            return res.status(406).json({message: "This service already exists"})
+
+        await ServiceM.findOneAndUpdate({name: _oldName},{
             name: _name,
             description: _desc,
             price: _price,
