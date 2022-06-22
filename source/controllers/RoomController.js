@@ -134,6 +134,23 @@ class RoomController{
         res.json({message: `${_name} is updated successfully`})
     }
 
+    async update2 (req, res, next) {
+
+        const newRoom = {
+            serviceList: req.body.services,
+            _id: req.body.id,
+            actualState: req.body.actualState,
+        }
+
+        if (req.body.status){
+            newRoom.status = req.body.status
+        }
+       
+        await RoomM.findOneAndUpdate({_id: req.body.id}, newRoom) 
+
+        res.json( {message: 'updated successfully'})
+    }
+
     async delete (req, res, next) {
         const _name = req.body.name; 
         const room = await RoomM.findOne({name: _name})
