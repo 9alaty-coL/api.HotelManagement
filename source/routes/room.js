@@ -5,6 +5,7 @@ const isAuth = require('../middlewares/isAuth')
 const isAdmin = require('../middlewares/isAdmin')
 
 router.get('/getRooms', isAuth, RoomController.getAllRoom)
+router.get('/getSelectedRooms', isAuth, RoomController.getSelectedRoom)
 router.get('/getRoom', isAuth, RoomController.getOneRoom)
 router.get('/getRoomById', isAuth, RoomController.getOneById)
 router.get('/getBookedRoom', isAuth, RoomController.getBookedRoom)

@@ -6,6 +6,25 @@ class RoomController{
         res.json(rooms)
     }
 
+    async getSelectedRoom(req, res, next) {
+        let sortParams = {}
+        if (req.query.status !== "Tất cả") 
+            sortParams.status = req.query.status
+        if (req.query.type !== "Tất cả")
+            sortParams.type = req.query.type
+        if (req.query.state !== "Tất cả")
+            sortParams.actualState = req.query.state
+
+        console.log(sortParams)
+
+        const selectedRoom = await RoomM.find(sortParams)
+
+        if (!selectedRoom)
+            return res.status(404).json({message: "Not found"})
+        else
+            res.json(selectedRoom)
+    }
+
     async getOneRoom (req, res, next){
         const _name = req.body.name;
         const room = await RoomM.findOne({name: _name})
@@ -36,7 +55,6 @@ class RoomController{
     }
 
     async getBookedRoomByName (req, res, next) {
-        console.log(req.query)
         const _name = req.query.name;
 
         if (_name === "") 
