@@ -95,8 +95,11 @@ class RoomController{
         const _price = req.body.price;
         const _customer = req.body.customer;
         const _services = req.body.services
-        const room = await RoomM.findOne({oldName: _oldName})
+        const room = await RoomM.findOne({name: _oldName})
+        const newRoom = await RoomM.findOne({name: _name})
 
+        if (newRoom && _name !== _oldName)
+            return res.status(406).json({message: "This room already exists"})
         if (!room)
             return res.status(404).json({message: "Not found"})
        
