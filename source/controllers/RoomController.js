@@ -144,7 +144,9 @@ class RoomController{
 
         if (req.body.status){
             newRoom.status = req.body.status
-            newRoom.customer = ''
+            if (req.body.status === 'Phòng trống'){
+                newRoom.customer = ''
+            }
         }
        
         await RoomM.findOneAndUpdate({_id: req.body.id}, newRoom) 
