@@ -6,7 +6,7 @@ const billSchema = new Schema({
   roomName: String,
   from: Date,
   to: Date,
-  total: Number,
+  total: String,
   createdBy: String,
 });
 
